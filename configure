@@ -15699,6 +15699,9 @@ elif test -d .hg; then
 fi
 BASE_CFLAGS=""
 BASE_LDFLAGS=""
+GTK_VERSION="gtk+-3.0"
+GTK_LFLAGS="`pkg-config --cflags $GTK_VERSION`"
+GTK_LDFLAGS="`pkg-config --libs $GTK_VERSION`"
 case "$host" in
     *-*-cygwin*)
         # We build SDL on cygwin without the UNIX emulation layer
@@ -15741,13 +15744,13 @@ esac
 # Uncomment the following line if you want to force SDL and applications
 # built with it to be compiled for a particular architecture.
 #AX_GCC_ARCHFLAG([no], [BASE_CFLAGS="$BASE_CFLAGS $ax_cv_gcc_archflag]")
-BUILD_CFLAGS="$CFLAGS $CPPFLAGS -DUSING_GENERATED_CONFIG_H"
+BUILD_CFLAGS="$GTK_LFLAGS $CFLAGS $CPPFLAGS -DUSING_GENERATED_CONFIG_H"
 # The default optimization for SDL is -O3 (Bug #31)
 if test "x$orig_CFLAGS" = x; then
     BUILD_CFLAGS=`echo $BUILD_CFLAGS | sed 's/-O2/-O3/'`
 fi
 EXTRA_CFLAGS="$INCLUDE $BASE_CFLAGS"
-BUILD_LDFLAGS="$LDFLAGS"
+BUILD_LDFLAGS="$GTK_LDFLAGS $LDFLAGS"
 EXTRA_LDFLAGS="$BASE_LDFLAGS"
 ## These are common directories to find software packages
 #for path in /usr/freeware /usr/pkg /usr/X11R6 /usr/local; do

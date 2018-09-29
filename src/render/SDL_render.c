@@ -170,7 +170,7 @@ SDL_RendererEventWatch(void *userdata, SDL_Event *event)
                     if (renderer->GetOutputSize) {
                         renderer->GetOutputSize(renderer, &w, &h);
                     } else {
-                        SDL_GetWindowSize(renderer->window, &w, &h);
+						SDL_GetWindowSizeInside(renderer->window, &w, &h);
                     }
 
                     if (renderer->target) {
@@ -381,7 +381,7 @@ SDL_CreateRenderer(SDL_Window * window, int index, Uint32 flags)
             int window_w, window_h;
             int output_w, output_h;
             if (renderer->GetOutputSize(renderer, &output_w, &output_h) == 0) {
-                SDL_GetWindowSize(renderer->window, &window_w, &window_h);
+				SDL_GetWindowSizeInside(renderer->window, &window_w, &window_h);
                 renderer->dpi_scale.x = (float)window_w / output_w;
                 renderer->dpi_scale.y = (float)window_h / output_h;
             }
@@ -457,7 +457,7 @@ SDL_GetRendererOutputSize(SDL_Renderer * renderer, int *w, int *h)
     } else if (renderer->GetOutputSize) {
         return renderer->GetOutputSize(renderer, w, h);
     } else if (renderer->window) {
-        SDL_GetWindowSize(renderer->window, w, h);
+		SDL_GetWindowSizeInside(renderer->window, w, h);
         return 0;
     } else {
         SDL_assert(0 && "This should never happen");

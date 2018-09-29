@@ -201,7 +201,7 @@ WIN_StartTextInput(_THIS)
     if (window) {
         HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
         SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
-        SDL_GetWindowSize(window, &videodata->ime_winwidth, &videodata->ime_winheight);
+		SDL_GetWindowSizeInside(window, &videodata->ime_winwidth, &videodata->ime_winheight);
         IME_Init(videodata, hwnd);
         IME_Enable(videodata, hwnd);
     }

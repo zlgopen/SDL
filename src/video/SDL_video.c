@@ -1404,6 +1404,32 @@ SDL_FinishWindowCreation(SDL_Window *window, Uint32 flags)
     }
 }
 
+float
+SDLCALL SDL_GetWindowDpiRatio(SDL_Window* window)
+{
+	float dpi_ratio = 1.0f;
+#if SDL_VIDEO_DRIVER_WINDOWS
+	float ddpi = 1.0f; //Diagonal DPI
+	float hdpi = 1.0f; //Horizontal DPI
+	float vdpi = 1.0f; //Vertical DPI
+	const float nNormalPix = 96.0f;
+	SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
+	int displayIndex = SDL_GetIndexOfDisplay(display);
+	SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi);
+	dpi_ratio = hdpi / nNormalPix;
+#endif
+#if SDL_VIDEO_DRIVER_X11
+	GdkScreen *screen;
+	gtk_init(NULL, NULL);
+	screen = gdk_screen_get_default();
+	dpi_ratio = gdk_screen_get_monitor_scale_factor(screen, 0);
+	printf("screen: scale = %f\n", dpi_ratio);
+#endif
+	dpi_ratio = dpi_ratio > 1.0f ? dpi_ratio : 1.0f;
+	return dpi_ratio;
+}
+
+
 SDL_Window *
 SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint32 flags)
 {
@@ -1485,10 +1511,11 @@ SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint32 flags)
     }
     window->magic = &_this->window_magic;
     window->id = _this->next_object_id++;
+	window->dpi_ratio = SDL_GetWindowDpiRatio(window);
     window->x = x;
     window->y = y;
-    window->w = w;
-    window->h = h;
+	window->w = w * window->dpi_ratio;
+	window->h = h * window->dpi_ratio;
     if (SDL_WINDOWPOS_ISUNDEFINED(x) || SDL_WINDOWPOS_ISUNDEFINED(y) ||
         SDL_WINDOWPOS_ISCENTERED(x) || SDL_WINDOWPOS_ISCENTERED(y)) {
         SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
@@ -2031,13 +2058,26 @@ void
 SDL_GetWindowSize(SDL_Window * window, int *w, int *h)
 {
     CHECK_WINDOW_MAGIC(window,);
-    if (w) {
-        *w = window->w;
-    }
-    if (h) {
-        *h = window->h;
-    }
+	if (w) {
+		*w = window->w / window->dpi_ratio;
+	}
+	if (h) {
+		*h = window->h / window->dpi_ratio;
+	}
 }
+
+void
+SDL_GetWindowSizeInside(SDL_Window * window, int *w, int *h)
+{
+	CHECK_WINDOW_MAGIC(window, );
+	if (w) {
+		*w = window->w;
+	}
+	if (h) {
+		*h = window->h;
+	}
+}
+
 
 int
 SDL_GetWindowBordersSize(SDL_Window * window, int *top, int *left, int *bottom, int *right)
@@ -3545,7 +3585,7 @@ void SDL_GL_GetDrawableSize(SDL_Window * window, int *w, int *h)
     if (_this->GL_GetDrawableSize) {
         _this->GL_GetDrawableSize(_this, window, w, h);
     } else {
-        SDL_GetWindowSize(window, w, h);
+		SDL_GetWindowSizeInside(window, w, h);
     }
 }
 
@@ -4154,7 +4194,7 @@ void SDL_Vulkan_GetDrawableSize(SDL_Window * window, int *w, int *h)
     if (_this->Vulkan_GetDrawableSize) {
         _this->Vulkan_GetDrawableSize(_this, window, w, h);
     } else {
-        SDL_GetWindowSize(window, w, h);
+		SDL_GetWindowSizeInside(window, w, h);
     }
 }
 

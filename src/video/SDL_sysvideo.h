@@ -91,6 +91,7 @@ struct SDL_Window
     float opacity;
 
     float brightness;
+	float dpi_ratio; 
     Uint16 *gamma;
     Uint16 *saved_gamma;        /* (just offset into gamma) */
 

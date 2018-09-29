@@ -513,6 +513,7 @@
 #define SDL_GetWindowPixelFormat SDL_GetWindowPixelFormat_REAL
 #define SDL_CreateWindow SDL_CreateWindow_REAL
 #define SDL_CreateWindowFrom SDL_CreateWindowFrom_REAL
+#define SDL_GetWindowDpiRatio SDL_GetWindowDpiRatio_REAL
 #define SDL_GetWindowID SDL_GetWindowID_REAL
 #define SDL_GetWindowFromID SDL_GetWindowFromID_REAL
 #define SDL_GetWindowFlags SDL_GetWindowFlags_REAL

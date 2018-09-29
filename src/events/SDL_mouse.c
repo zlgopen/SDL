@@ -219,7 +219,7 @@ SDL_UpdateMouseFocus(SDL_Window * window, int x, int y, Uint32 buttonstate)
 
     if (window && ((window->flags & SDL_WINDOW_MOUSE_CAPTURE) == 0)) {
         int w, h;
-        SDL_GetWindowSize(window, &w, &h);
+		SDL_GetWindowSizeInside(window, &w, &h);
         if (x < 0 || y < 0 || x >= w || y >= h) {
             inWindow = SDL_FALSE;
         }
@@ -301,7 +301,7 @@ SDL_PrivateSendMouseMotion(SDL_Window * window, SDL_MouseID mouseID, int relativ
 
     if (mouseID != SDL_TOUCH_MOUSEID && mouse->relative_mode_warp) {
         int center_x = 0, center_y = 0;
-        SDL_GetWindowSize(window, &center_x, &center_y);
+		SDL_GetWindowSizeInside(window, &center_x, &center_y);
         center_x /= 2;
         center_y /= 2;
         if (x == center_x && y == center_y) {
@@ -365,7 +365,7 @@ SDL_PrivateSendMouseMotion(SDL_Window * window, SDL_MouseID mouseID, int relativ
         int x_max = 0, y_max = 0;
 
         /* !!! FIXME: shouldn't this be (window) instead of (mouse->focus)? */
-        SDL_GetWindowSize(mouse->focus, &x_max, &y_max);
+		SDL_GetWindowSizeInside(mouse->focus, &x_max, &y_max);
         --x_max;
         --y_max;
 

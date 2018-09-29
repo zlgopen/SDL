@@ -640,6 +640,8 @@ X11_DispatchEvent(_THIS)
     KeyCode orig_keycode;
     XClientMessageEvent m;
     int i;
+    int x_location;
+    int y_location;
 
     if (!videodata) {
         return;
@@ -744,7 +746,17 @@ X11_DispatchEvent(_THIS)
         }
         return;
     }
-
+    if (!data)
+    {
+        x_location = xevent.xcrossing.x / data->window->dpi_ratio;
+        y_location = xevent.xcrossing.y / data->window->dpi_ratio;
+    }
+    else
+    {
+        x_location = xevent.xcrossing.x;
+        y_location = xevent.xcrossing.y;
+    }
+    
     switch (xevent.type) {
 
         /* Gaining mouse coverage? */
@@ -766,7 +778,7 @@ X11_DispatchEvent(_THIS)
             mouse->last_y = xevent.xcrossing.y;
 
             if (!mouse->relative_mode) {
-                SDL_SendMouseMotion(data->window, 0, 0, xevent.xcrossing.x, xevent.xcrossing.y);
+                SDL_SendMouseMotion(data->window, 0, 0, x_location, y_location);
             }
         }
         break;
@@ -783,7 +795,7 @@ X11_DispatchEvent(_THIS)
                 printf("Mode: NotifyUngrab\n");
 #endif
             if (!SDL_GetMouse()->relative_mode) {
-                SDL_SendMouseMotion(data->window, 0, 0, xevent.xcrossing.x, xevent.xcrossing.y);
+                SDL_SendMouseMotion(data->window, 0, 0, x_location, y_location);
             }
 
             if (xevent.xcrossing.mode != NotifyGrab &&
@@ -1119,7 +1131,7 @@ X11_DispatchEvent(_THIS)
                 printf("window %p: X11 motion: %d,%d\n", data, xevent.xmotion.x, xevent.xmotion.y);
 #endif
 
-                SDL_SendMouseMotion(data->window, 0, 0, xevent.xmotion.x, xevent.xmotion.y);
+                SDL_SendMouseMotion(data->window, 0, 0, x_location, y_location);
             }
         }
         break;

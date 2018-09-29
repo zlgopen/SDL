@@ -471,6 +471,11 @@ extern DECLSPEC int SDLCALL SDL_GetWindowDisplayMode(SDL_Window * window,
 extern DECLSPEC Uint32 SDLCALL SDL_GetWindowPixelFormat(SDL_Window * window);
 
 /**
+*  \brief Get the DPI of window.
+*/
+extern DECLSPEC float SDLCALL SDL_GetWindowDpiRatio(SDL_Window* window);
+
+/**
  *  \brief Create a window with the specified position, dimensions, and flags.
  *
  *  \param title The title of the window, in UTF-8 encoding.
@@ -665,6 +670,24 @@ extern DECLSPEC void SDLCALL SDL_SetWindowSize(SDL_Window * window, int w,
  */
 extern DECLSPEC void SDLCALL SDL_GetWindowSize(SDL_Window * window, int *w,
                                                int *h);
+
+/**
+*  \brief Get the size of a window's client area.Only call by SDL Lib inside
+*
+*  \param window   The window to query.
+*  \param w        Pointer to variable for storing the width, in screen
+*                  coordinates. May be NULL.
+*  \param h        Pointer to variable for storing the height, in screen
+*                  coordinates. May be NULL.
+*
+*  The window size in screen coordinates may differ from the size in pixels, if
+*  the window was created with SDL_WINDOW_ALLOW_HIGHDPI on a platform with
+*  high-dpi support (e.g. iOS or OS X). Use SDL_GL_GetDrawableSize() or
+*  SDL_GetRendererOutputSize() to get the real client area size in pixels.
+*
+*  \sa SDL_SetWindowSize()
+*/
+extern DECLSPEC void SDLCALL SDL_GetWindowSizeInside(SDL_Window * window, int *w, int *h);
 
 /**
  *  \brief Get the size of a window's borders (decorations) around the client area.
