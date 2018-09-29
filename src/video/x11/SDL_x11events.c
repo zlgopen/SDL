@@ -746,7 +746,7 @@ X11_DispatchEvent(_THIS)
         }
         return;
     }
-    if (!data)
+    if (data)
     {
         x_location = xevent.xcrossing.x / data->window->dpi_ratio;
         y_location = xevent.xcrossing.y / data->window->dpi_ratio;

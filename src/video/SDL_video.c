@@ -56,6 +56,10 @@
 #include <emscripten.h>
 #endif
 
+#if SDL_VIDEO_DRIVER_X11
+#include <gtk/gtk.h>
+#endif
+
 /* Available video drivers */
 static VideoBootStrap *bootstrap[] = {
 #if SDL_VIDEO_DRIVER_COCOA
