@@ -35,7 +35,9 @@
 #define SDL_VARIABLE_LENGTH_ARRAY
 #endif
 
+#ifndef SDL_REAL_API
 #include "dynapi/SDL_dynapi.h"
+#endif
 
 #if SDL_DYNAMIC_API
 #include "dynapi/SDL_dynapi_overrides.h"

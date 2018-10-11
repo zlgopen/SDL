@@ -1427,7 +1427,7 @@ SDLCALL SDL_GetWindowDpiRatio(SDL_Window* window)
 	gtk_init(NULL, NULL);
 	screen = gdk_screen_get_default();
 	dpi_ratio = gdk_screen_get_monitor_scale_factor(screen, 0);
-	printf("screen: scale = %f\n", dpi_ratio);
+	//printf("screen: scale = %f\n", dpi_ratio);
 #endif
 	dpi_ratio = dpi_ratio > 1.0f ? dpi_ratio : 1.0f;
 	return dpi_ratio;
