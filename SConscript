@@ -16,14 +16,9 @@ if OS_NAME == 'Windows':
 		Glob('src/audio/wasapi/*.c')+\
 		Glob('src/core/windows/*.c')+\
 		Glob('src/cpuinfo/*.c')+\
-		Glob('src/dynapi/*.c')+\
 		Glob('src/events/*.c')+\
 		Glob('src/file/*.c')+\
 		Glob('src/filesystem/windows/*.c')+\
-		Glob('src/haptic/*.c')+\
-		Glob('src/haptic/windows/*.c')+\
-		Glob('src/joystick/*.c')+\
-		Glob('src/joystick/windows/*.c')+\
 		Glob('src/libm/*.c')+\
 		Glob('src/loadso/windows/*.c')+\
 		Glob('src/power/*.c')+\
@@ -70,48 +65,30 @@ elif OS_NAME == 'Linux':
 	Glob('src/atomic/*.c')+\
 	Glob('src/audio/*.c')+\
 	Glob('src/cpuinfo/*.c')+\
-	Glob('src/dynapi/*.c')+\
 	Glob('src/events/*.c')+\
 	Glob('src/file/*.c')+\
-	Glob('src/haptic/*.c')+\
-	Glob('src/joystick/*.c')+\
 	Glob('src/libm/*.c')+\
 	Glob('src/power/*.c')+\
-	Glob('src/render/direct3d/*.c')+\
-	Glob('src/render/direct3d/*.c')+\
-	Glob('src/render/direct3d11/*.c')+\
 	Glob('src/render/opengl/*.c')+\
-	Glob('src/render/opengles/*.c')+\
 	Glob('src/render/opengles2/*.c')+\
-	Glob('src/render/psp/*.c')+\
 	Glob('src/render/software/*.c')+\
 	Glob('src/render/*.c')+\
-	Glob('src/sensor/*.c')+\
 	Glob('src/stdlib/*.c')+\
 	Glob('src/thread/*.c')+\
 	Glob('src/timer/SDL_timer.c')+\
-	Glob('src/video/dummy/*.c')+\
 	Glob('src/video/yuv2rgb/*.c')+\
 	Glob('src/video/*.c')+\
-	Glob('src/audio/disk/*.c')+\
-	Glob('src/audio/dummy/*.c')+\
 	Glob('src/loadso/dlopen//*.c')+\
-	Glob('src/audio/dsp/*.c')+\
-	Glob('src/audio/alsa/*.c')+\
-	Glob('src/audio/pulseaudio/*.c')+\
+	Glob('src/audio/dummy/*.c')+\
 	Glob('src/audio/sndio/*.c')+\
 	Glob('src/video/x11/*.c')+\
-	Glob('src/video/wayland/*.c')+\
+	Glob('src/video/dummy/*.c')+\
 	Glob('src/core/linux/*.c')+\
 	Glob('src/thread/pthread/*.c')+\
-	Glob('src/joystick/linux/*.c')+\
-	Glob('src/joystick/steam/*.c')+\
-	Glob('src/haptic/linux/*.c')+\
 	Glob('src/power/linux/*.c')+\
 	Glob('src/filesystem/unix/*.c')+\
 	Glob('src/timer/unix/*.c')+\
 	Glob('src/core/unix/*.c')+\
-	Glob('src/sensor/dummy/*.c')+\
 	Glob('src/main/dummy/*.c')
 
 env.Library(os.path.join(LIB_DIR, 'SDL2'), sources, CPPPATH = CPPPATH)
