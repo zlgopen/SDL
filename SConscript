@@ -53,6 +53,7 @@ elif OS_NAME == 'Linux':
 	    '/usr/include/pixman-1',
 	    '/usr/include/gdk-pixbuf-2.0',
 	    '/usr/include/glib-2.0',
+		'/usr/lib/glib-2.0/include',
 	    '/usr/lib/x86_64-linux-gnu/glib-2.0/include',
 	    '/usr/include/ibus-1.0',
 		'include',
@@ -91,5 +92,7 @@ elif OS_NAME == 'Linux':
 	Glob('src/core/unix/*.c')+\
 	Glob('src/main/dummy/*.c')
 
-env.Library(os.path.join(LIB_DIR, 'SDL2'), sources, CPPPATH = CPPPATH)
+CCFLAGS=os.environ['CCFLAGS'];
+CCFLAGS = CCFLAGS + ' -DSDL_STATIC_LIB -D__FLTUSED__ '
+env.Library(os.path.join(LIB_DIR, 'SDL2'), sources, CPPPATH = CPPPATH, CCFLAGS = CCFLAGS)
 
